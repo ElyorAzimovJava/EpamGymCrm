@@ -6,8 +6,7 @@ import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
-@Builder
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 public class Trainee extends User{
     private LocalDate dateOfBirth;

@@ -13,7 +13,7 @@ import java.util.UUID;
 @Builder
 public class Training {
     private UUID id;
-    private UUID trainingId;
+    private UUID traineeId;
     private UUID trainerId;
     private String trainingName;
     private String trainingType;

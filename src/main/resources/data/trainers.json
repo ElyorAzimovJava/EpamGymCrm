@@ -1,0 +1,18 @@
+[
+  {
+    "firstName": "John",
+    "lastName": "Doe",
+    "username": "john_doe",
+    "password": "12345",
+    "active": true,
+    "specialization": "Cardio"
+  },
+  {
+    "firstName": "Alice",
+    "lastName": "Smith",
+    "username": "alice_smith",
+    "password": "67890",
+    "active": true,
+    "specialization": "Strength"
+  }
+]
