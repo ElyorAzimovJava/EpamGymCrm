@@ -16,7 +16,19 @@ public class Training {
     private UUID traineeId;
     private UUID trainerId;
     private String trainingName;
-    private String trainingType;
+    private TrainingType trainingType;
     private LocalDateTime trainingDate;
     private Long durationMinutes;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Training training)) return false;
+        return id != null && id.equals(training.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
 }
+

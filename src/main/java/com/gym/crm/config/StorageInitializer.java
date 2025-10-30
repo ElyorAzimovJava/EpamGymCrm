@@ -2,9 +2,11 @@ package com.gym.crm.config;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
@@ -13,7 +15,10 @@ import java.util.Map;
 import java.util.UUID;
 
 @Component
+@RequiredArgsConstructor
 public class StorageInitializer implements BeanPostProcessor {
+    private final ResourceLoader resourceLoader;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Value("${trainer.data.path}")
     private String trainerDataPath;
@@ -24,7 +29,6 @@ public class StorageInitializer implements BeanPostProcessor {
     @Value("${training.data.path}")
     private String trainingDataPath;
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     @SuppressWarnings("unchecked")
