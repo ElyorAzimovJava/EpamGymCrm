@@ -1,11 +1,12 @@
 package com.gym.crm;
 
-import com.gym.crm.config.StorageConfiguration;
+import com.gym.crm.config.AppConfig;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class GymCRM {
     public static void main(String[] args) {
-      var applicationContext = new AnnotationConfigApplicationContext(StorageConfiguration.class);
-      applicationContext.getBean(StorageConfiguration.TRAINEE_DB_BEAN_NAME);
+        ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+        System.out.println("Application context has been initialized");
     }
 }

@@ -5,12 +5,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import lombok.EqualsAndHashCode;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@EqualsAndHashCode(of = {"traineeId", "trainerId", "trainingDate"})
 public class Training {
     private UUID id;
     private UUID traineeId;
@@ -19,16 +22,4 @@ public class Training {
     private TrainingType trainingType;
     private LocalDateTime trainingDate;
     private Long durationMinutes;
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Training training)) return false;
-        return id != null && id.equals(training.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return id != null ? id.hashCode() : 0;
-    }
 }
-

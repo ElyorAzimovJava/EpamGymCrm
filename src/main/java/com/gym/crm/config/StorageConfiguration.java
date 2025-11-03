@@ -1,37 +1,39 @@
 package com.gym.crm.config;
 
+import com.gym.crm.model.Trainee;
+import com.gym.crm.model.Trainer;
+import com.gym.crm.model.Training;
+import com.gym.crm.storage.InMemoryStorage;
+import com.gym.crm.storage.InMemoryTraineeStorageImpl;
+import com.gym.crm.storage.InMemoryTrainerStorageImpl;
+import com.gym.crm.storage.InMemoryTrainingStorageImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.logging.Logger;
-
-@Configuration
 @Slf4j
+@Configuration
 public class StorageConfiguration {
+
     public static final String TRAINER_DB_BEAN_NAME = "trainerDb";
     public static final String TRAINEE_DB_BEAN_NAME = "traineeDb";
     public static final String TRAINING_DB_BEAN_NAME = "trainingDb";
 
     @Bean(name = TRAINER_DB_BEAN_NAME)
-    public Map<UUID, Object> trainerDb() {
+    public InMemoryStorage<Trainer> trainerDb() {
         log.info("Trainer DB bean has been initialized");
-        return new ConcurrentHashMap<>();
+        return new InMemoryTrainerStorageImpl();
     }
 
     @Bean(name = TRAINEE_DB_BEAN_NAME)
-    public Map<UUID, Object> traineeDb() {
+    public InMemoryStorage<Trainee> traineeDb() {
         log.info("Trainee DB bean has been initialized");
-        return new ConcurrentHashMap<>();
+        return new InMemoryTraineeStorageImpl();
     }
 
     @Bean(name = TRAINING_DB_BEAN_NAME)
-    public Map<UUID, Object> trainingDb() {
+    public InMemoryStorage<Training> trainingDb() {
         log.info("Training DB bean has been initialized");
-        return new ConcurrentHashMap<>();
+        return new InMemoryTrainingStorageImpl();
     }
 }
