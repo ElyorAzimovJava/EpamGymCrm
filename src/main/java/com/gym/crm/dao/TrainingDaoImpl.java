@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public class TrainingDaoImpl implements TrainingDao {
+public class TrainingDaoImpl implements Dao<Training, UUID> {
 
     private final InMemoryStorage<Training> trainingStorage;
 
