@@ -45,4 +45,12 @@ public class TraineeDaoImpl implements TraineeDao {
     public void delete(UUID id) {
         traineeStorage.remove(id);
     }
+
+    @Override
+    public Trainee findByUsername(String username) {
+        return traineeStorage.values()
+                .stream()
+                .filter(trainer -> trainer.getUsername().equals(username))
+                .findFirst().orElse(null);
+    }
 }
