@@ -7,22 +7,20 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.logging.Logger;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class TrainingService {
-    private static final Logger logger = Logger.getLogger(TrainingService.class.getName());
-
 
     private Dao<Training, UUID> trainingDao;
-
 
     @Autowired
     public void setTrainingDao(Dao<Training, UUID> trainingDao) { this.trainingDao = trainingDao; }
 
-
-    public Training createTraining(Training t) {
-        Training saved = trainingDao.create(t);
-        logger.info("Training created: " + saved);
+    public Training createTraining(Training training) {
+        Training saved = trainingDao.create(training);
+        log.info("Training created: {}", saved);
         return saved;
     }
 

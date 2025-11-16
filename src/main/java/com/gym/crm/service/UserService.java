@@ -5,6 +5,10 @@ import com.gym.crm.dao.TrainerDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 @Service
 public class UserService {
 
@@ -25,15 +29,19 @@ public class UserService {
         String base = buildUsername(firstName, lastName);
         String username = base;
         int serial = 1;
-        while (existsUsername(username)) {
+        List<String> allUsernames = getAllUsernames();
+        while (allUsernames.contains(username)) {
             username = base + serial;
             serial++;
         }
         return username;
     }
 
-    private boolean existsUsername(String username) {
-        return traineeDao.findByUsername(username) != null || trainerDao.findByUsername(username) != null;
+    private List<String> getAllUsernames() {
+        return Stream.concat(
+                traineeDao.findAll().stream().map(trainee -> trainee.getUsername()),
+                trainerDao.findAll().stream().map(trainer -> trainer.getUsername())
+        ).collect(Collectors.toList());
     }
 
     private String buildUsername(String firstName, String lastName) {
