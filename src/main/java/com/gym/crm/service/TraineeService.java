@@ -31,7 +31,7 @@ public class TraineeService {
     public Trainee createTrainee(Trainee trainee) {
         String username = userService.generateUsername(trainee.getFirstName(), trainee.getLastName());
         trainee.setUsername(username);
-        trainee.setPassword(PasswordGenerator.generatePassword());
+        trainee.setPassword(PasswordGenerator.generatePassword(10));
         Trainee saved = traineeDao.create(trainee);
         log.info("Trainee with username {} saved successfully", saved.getUsername());
         return saved;
