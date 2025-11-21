@@ -1,5 +1,6 @@
 package com.gym.crm.dao;
 
+import com.gym.crm.model.Trainee;
 import com.gym.crm.model.Trainer;
 import com.gym.crm.storage.InMemoryStorage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,15 @@ public class TrainerDaoImpl implements TrainerDao {
     public Trainer update(Trainer entity) {
         trainerStorage.put(entity.getId(), entity);
         return entity;
+    }
+
+    @Override
+    public Trainer findByUsername(String username) {
+        return trainerStorage.values()
+                .stream()
+                .filter(trainer -> trainer.getUsername().equals(username))
+                .findFirst().orElse(null);
+
     }
 
     @Override
