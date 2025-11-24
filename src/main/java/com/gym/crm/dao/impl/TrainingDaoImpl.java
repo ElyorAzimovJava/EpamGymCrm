@@ -1,5 +1,6 @@
-package com.gym.crm.dao;
+package com.gym.crm.dao.impl;
 
+import com.gym.crm.dao.Dao;
 import com.gym.crm.model.Training;
 import com.gym.crm.storage.InMemoryStorage;
 import org.springframework.beans.factory.annotation.Autowired;
