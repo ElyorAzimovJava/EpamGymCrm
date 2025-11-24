@@ -32,6 +32,7 @@ public class TraineeServiceImpl implements TraineeService {
     }
 
     public Trainee createTrainee(Trainee trainee) {
+        log.debug("Creating trainee with details: {}", trainee);
         String username = userService.generateUsername(trainee.getFirstName(), trainee.getLastName());
         trainee.setUsername(username);
         trainee.setPassword(PasswordGenerator.generatePassword(10));
@@ -41,19 +42,23 @@ public class TraineeServiceImpl implements TraineeService {
     }
 
     public Trainee updateTrainee(Trainee trainee) {
+        log.debug("Updating trainee with details: {}", trainee);
         traineeDao.update(trainee);
         return trainee;
     }
 
     public void deleteTrainee(UUID id) {
+        log.debug("Deleting trainee with ID: {}", id);
         traineeDao.delete(id);
     }
 
     public Trainee findById(UUID id) {
+        log.debug("Finding trainee with ID: {}", id);
         return traineeDao.findById(id);
     }
 
     public List<Trainee> listAll() {
+        log.debug("Listing all trainees");
         return traineeDao.findAll();
     }
 }

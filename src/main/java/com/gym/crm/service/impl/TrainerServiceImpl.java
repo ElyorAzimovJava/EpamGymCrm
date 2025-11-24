@@ -31,6 +31,7 @@ public class TrainerServiceImpl implements TrainerService {
     }
 
     public Trainer createTrainer(Trainer trainer) {
+        log.debug("Creating trainer with details: {}", trainer);
         String username = userService.generateUsername(trainer.getFirstName(), trainer.getLastName());
         trainer.setUsername(username);
         trainer.setPassword(PasswordGenerator.generatePassword(10));
@@ -40,15 +41,18 @@ public class TrainerServiceImpl implements TrainerService {
     }
 
     public Trainer updateTrainer(Trainer trainer) {
+        log.debug("Updating trainer with details: {}", trainer);
         trainerDao.update(trainer);
         return trainer;
     }
 
     public Trainer findById(UUID id) {
+        log.debug("Finding trainer with ID: {}", id);
         return trainerDao.findById(id);
     }
 
     public List<Trainer> listAll() {
+        log.debug("Listing all trainers");
         return trainerDao.findAll();
     }
 }
