@@ -2,6 +2,7 @@ package com.gym.crm.service.impl;
 
 import com.gym.crm.dao.TraineeDao;
 import com.gym.crm.dao.TrainerDao;
+import com.gym.crm.model.User;
 import com.gym.crm.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,12 +41,12 @@ public class UserServiceImpl implements UserService {
 
     private List<String> getAllUsernames() {
         return Stream.concat(
-                traineeDao.findAll().stream().map(trainee -> trainee.getUsername()),
-                trainerDao.findAll().stream().map(trainer -> trainer.getUsername())
+                traineeDao.findAll().stream().map(User::getUsername),
+                trainerDao.findAll().stream().map(User::getUsername)
         ).collect(Collectors.toList());
     }
 
     private String buildUsername(String firstName, String lastName) {
-        return String.format("%s.%s", firstName.trim(), lastName.trim());
+        return String.format("%s.%s", firstName.trim().toLowerCase(), lastName.trim().toLowerCase());
     }
 }

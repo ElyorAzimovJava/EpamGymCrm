@@ -22,6 +22,7 @@ public class TrainingDaoImpl implements Dao<Training, UUID> {
 
     @Override
     public Training create(Training entity) {
+        entity.setId(UUID.randomUUID());
         trainingStorage.put(entity.getId(), entity);
         return entity;
     }

@@ -22,6 +22,7 @@ public class TraineeDaoImpl implements TraineeDao {
 
     @Override
     public Trainee create(Trainee entity) {
+        entity.setId(UUID.randomUUID());
         traineeStorage.put(entity.getId(), entity);
         return entity;
     }
