@@ -22,6 +22,7 @@ public class TrainerDaoImpl implements TrainerDao {
 
     @Override
     public Trainer create(Trainer entity) {
+        entity.setId(UUID.randomUUID());
         trainerStorage.put(entity.getId(), entity);
         return entity;
     }
