@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ComponentScan(basePackages = "com.gym.crm")
 @PropertySource(value = "classpath:application.yaml", factory = YamlPropertySourceFactory.class)
-@Import(HibernateConfig.class)
 public class AppConfig {
    @Bean
     public ObjectMapper objectMapper() {

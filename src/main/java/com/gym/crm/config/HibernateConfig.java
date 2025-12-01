@@ -1,8 +1,9 @@
 package com.gym.crm.config;
 
+import com.gym.crm.config.DatabaseProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -17,19 +18,20 @@ import java.util.Properties;
 @EnableTransactionManagement
 public class HibernateConfig {
 
-    private final Environment env;
+    private final DatabaseProperties databaseProperties;
 
-    public HibernateConfig(Environment env) {
-        this.env = env;
+    @Autowired
+    public HibernateConfig(DatabaseProperties databaseProperties) {
+        this.databaseProperties = databaseProperties;
     }
 
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(env.getProperty("jdbc.driverClassName"));
-        dataSource.setUrl(env.getProperty("jdbc.url"));
-        dataSource.setUsername(env.getProperty("jdbc.user"));
-        dataSource.setPassword(env.getProperty("jdbc.pass"));
+        dataSource.setDriverClassName(databaseProperties.getDriverClassName());
+        dataSource.setUrl(databaseProperties.getUrl());
+        dataSource.setUsername(databaseProperties.getUsername());
+        dataSource.setPassword(databaseProperties.getPassword());
         return dataSource;
     }
 
@@ -38,8 +40,15 @@ public class HibernateConfig {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
         em.setPackagesToScan("com.gym.crm.model");
-        em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
-        em.setJpaProperties(hibernateProperties());
+
+        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        em.setJpaVendorAdapter(vendorAdapter);
+
+        Properties properties = new Properties();
+        properties.setProperty("hibernate.hbm2ddl.auto", databaseProperties.getHbm2ddlAuto());
+        properties.setProperty("hibernate.dialect", databaseProperties.getDialect());
+        em.setJpaProperties(properties);
+
         return em;
     }
 
@@ -48,12 +57,5 @@ public class HibernateConfig {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
         return transactionManager;
-    }
-
-    private Properties hibernateProperties() {
-        Properties properties = new Properties();
-        properties.setProperty("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
-        properties.setProperty("hibernate.dialect", env.getProperty("hibernate.dialect"));
-        return properties;
     }
 }
