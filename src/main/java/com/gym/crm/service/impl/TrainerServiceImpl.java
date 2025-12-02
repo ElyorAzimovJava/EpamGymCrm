@@ -34,7 +34,7 @@ public class TrainerServiceImpl implements TrainerService {
         log.debug("Creating trainer with details: {}", trainer);
         String username = userService.generateUsername(trainer.getFirstName(), trainer.getLastName());
         trainer.setUsername(username);
-        trainer.setPassword(PasswordGenerator.generatePassword(10));
+        trainer.setPassword(new String(PasswordGenerator.generatePassword(10)));
         Trainer newTrainer = trainerDao.create(trainer);
         log.info("Trainer with username {} saved successfully", newTrainer.getUsername());
         return newTrainer;

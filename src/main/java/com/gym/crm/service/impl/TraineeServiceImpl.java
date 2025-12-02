@@ -35,7 +35,7 @@ public class TraineeServiceImpl implements TraineeService {
         log.debug("Creating trainee with details: {}", trainee);
         String username = userService.generateUsername(trainee.getFirstName(), trainee.getLastName());
         trainee.setUsername(username);
-        trainee.setPassword(PasswordGenerator.generatePassword(10));
+        trainee.setPassword(new String(PasswordGenerator.generatePassword(10)));
         Trainee saved = traineeDao.create(trainee);
         log.info("Trainee with username {} saved successfully", saved.getUsername());
         return saved;
