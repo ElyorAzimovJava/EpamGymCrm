@@ -36,9 +36,9 @@ class TrainerDaoImplTest {
         trainer.setFirstName("John");
         trainer.setLastName("Doe");
         trainer.setUsername("john.doe");
-        trainer.setPassword("password".toCharArray());
+        trainer.setPassword("password");
         trainer.setActive(true);
-        trainer.setSpecialization("Pull up");
+        trainer.setSpecialization(new TrainingType(UUID.randomUUID(),"Pull up"));
         trainerDao.create(trainer);
         assertNotNull(trainer.getId());
         verify(storage).put(trainer.getId(), trainer);

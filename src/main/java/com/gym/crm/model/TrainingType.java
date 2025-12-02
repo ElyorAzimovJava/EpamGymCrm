@@ -12,8 +12,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-
 import java.util.UUID;
 
 @Data
@@ -28,9 +26,4 @@ public class TrainingType {
     private UUID id;
     @Column(unique = true, nullable = false)
     private String trainingTypeName;
-
-    @JsonCreator
-    public TrainingType(String trainingTypeName) {
-        this.trainingTypeName = trainingTypeName;
-    }
 }

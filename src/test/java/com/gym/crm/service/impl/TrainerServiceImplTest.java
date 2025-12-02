@@ -41,7 +41,7 @@ class TrainerServiceImplTest {
         trainer.setFirstName("John");
         trainer.setLastName("Doe");
         trainer.setActive(true);
-        trainer.setSpecialization("Push up");
+        trainer.setSpecialization(new TrainingType(UUID.randomUUID(),"Push up"));
         when(userService.generateUsername("John", "Doe")).thenReturn("john.doe");
         when(trainerDao.create(any(Trainer.class))).thenReturn(trainer);
         trainerService.createTrainer(trainer);
