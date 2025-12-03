@@ -1,6 +1,6 @@
 package com.gym.crm.storage;
 
-import com.gym.crm.model.Training;
+import com.gym.crm.entity.Training;
 
 public class InMemoryTrainingStorageImpl extends InMemoryStorage<Training> {
     @Override

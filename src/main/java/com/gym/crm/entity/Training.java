@@ -1,5 +1,8 @@
-package com.gym.crm.model;
+package com.gym.crm.entity;
 
+import com.gym.crm.entity.Trainee;
+import com.gym.crm.entity.Trainer;
+import com.gym.crm.entity.TrainingType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

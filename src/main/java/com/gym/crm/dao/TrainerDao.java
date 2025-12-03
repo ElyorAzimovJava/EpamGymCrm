@@ -1,6 +1,6 @@
 package com.gym.crm.dao;
 
-import com.gym.crm.model.Trainer;
+import com.gym.crm.entity.Trainer;
 
 import java.util.UUID;
 

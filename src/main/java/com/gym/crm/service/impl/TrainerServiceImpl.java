@@ -1,7 +1,7 @@
 package com.gym.crm.service.impl;
 
 import com.gym.crm.dao.TrainerDao;
-import com.gym.crm.model.Trainer;
+import com.gym.crm.entity.Trainer;
 import com.gym.crm.service.PasswordGenerator;
 import com.gym.crm.service.TrainerService;
 import com.gym.crm.service.UserService;

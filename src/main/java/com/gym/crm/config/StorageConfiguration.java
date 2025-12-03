@@ -1,8 +1,8 @@
 package com.gym.crm.config;
 
-import com.gym.crm.model.Trainee;
-import com.gym.crm.model.Trainer;
-import com.gym.crm.model.Training;
+import com.gym.crm.entity.Trainee;
+import com.gym.crm.entity.Trainer;
+import com.gym.crm.entity.Training;
 import com.gym.crm.storage.InMemoryStorage;
 import com.gym.crm.storage.InMemoryTraineeStorageImpl;
 import com.gym.crm.storage.InMemoryTrainerStorageImpl;

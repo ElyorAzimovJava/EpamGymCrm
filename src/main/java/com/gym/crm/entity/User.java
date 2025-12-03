@@ -1,5 +1,4 @@
-package com.gym.crm.model;
-
+package com.gym.crm.entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;

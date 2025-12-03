@@ -1,7 +1,7 @@
 package com.gym.crm.service.impl;
 
 import com.gym.crm.dao.impl.TrainingDaoImpl;
-import com.gym.crm.model.Training;
+import com.gym.crm.entity.Training;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
