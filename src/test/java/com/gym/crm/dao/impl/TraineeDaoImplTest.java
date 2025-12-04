@@ -37,7 +37,7 @@ class TraineeDaoImplTest {
         trainee.setFirstName("John");
         trainee.setLastName("Doe");
         trainee.setUsername("john.doe");
-        trainee.setPassword("password");
+        trainee.setPassword("password".toCharArray());
         trainee.setActive(true);
         trainee.setDateOfBirth(LocalDate.of(2005,2,12));
         trainee.setAddress("address");

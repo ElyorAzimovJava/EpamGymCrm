@@ -1,9 +1,6 @@
 package com.gym.crm.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -14,7 +11,8 @@ import jakarta.persistence.Table;
 import java.util.List;
 
 @Data
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, exclude = "trainees")
+@ToString(callSuper = true, exclude = "trainees")
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -31,7 +29,7 @@ public class Trainer extends User {
     )
     private List<Trainee> trainees;
 
-    public Trainer(String firstName, String lastName, String username, String password, boolean active, TrainingType specialization) {
+    public Trainer(String firstName, String lastName, String username, char[] password, boolean active, TrainingType specialization) {
         super(firstName, lastName, username, password, active);
         this.specialization = specialization;
     }

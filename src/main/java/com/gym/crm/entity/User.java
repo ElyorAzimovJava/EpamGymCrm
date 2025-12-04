@@ -12,6 +12,9 @@ import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
 
+import jakarta.persistence.Convert;
+import lombok.ToString;
+
 import java.util.UUID;
 
 @Data
@@ -31,11 +34,13 @@ public abstract class User {
     @Column(nullable = false, unique = true)
     private String username;
     @Column(nullable = false)
-    private String password;
+    @Convert(converter = PasswordConverter.class)
+    @ToString.Exclude
+    private char[] password;
     @Column(name = "is_active", nullable = false)
     private boolean active;
 
-    public User(String firstName, String lastName, String username, String password, boolean active) {
+    public User(String firstName, String lastName, String username, char[] password, boolean active) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;

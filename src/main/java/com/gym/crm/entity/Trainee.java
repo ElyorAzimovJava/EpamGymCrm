@@ -1,9 +1,6 @@
 package com.gym.crm.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,7 +10,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Data
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, exclude = "trainers")
+@ToString(callSuper = true, exclude = "trainers")
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -26,7 +24,7 @@ public class Trainee extends User {
     @ManyToMany(mappedBy = "trainees")
     private List<Trainer> trainers;
 
-    public Trainee(String firstName, String lastName, String username, String password, boolean active, LocalDate dateOfBirth, String address) {
+    public Trainee(String firstName, String lastName, String username, char[] password, boolean active, LocalDate dateOfBirth, String address) {
         super(firstName, lastName, username, password, active);
         this.dateOfBirth = dateOfBirth;
         this.address = address;
