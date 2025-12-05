@@ -1,7 +1,7 @@
 package com.gym.crm.service.impl;
 
 import com.gym.crm.dao.TraineeDao;
-import com.gym.crm.model.Trainee;
+import com.gym.crm.entity.Trainee;
 import com.gym.crm.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

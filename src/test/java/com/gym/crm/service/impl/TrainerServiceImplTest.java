@@ -1,8 +1,8 @@
 package com.gym.crm.service.impl;
 
 import com.gym.crm.dao.TrainerDao;
-import com.gym.crm.model.Trainer;
-import com.gym.crm.model.TrainingType;
+import com.gym.crm.entity.Trainer;
+import com.gym.crm.entity.TrainingType;
 import com.gym.crm.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -41,7 +41,7 @@ class TrainerServiceImplTest {
         trainer.setFirstName("John");
         trainer.setLastName("Doe");
         trainer.setActive(true);
-        trainer.setSpecialization("Push up");
+        trainer.setSpecialization(new TrainingType(UUID.randomUUID(),"Push up"));
         when(userService.generateUsername("John", "Doe")).thenReturn("john.doe");
         when(trainerDao.create(any(Trainer.class))).thenReturn(trainer);
         trainerService.createTrainer(trainer);

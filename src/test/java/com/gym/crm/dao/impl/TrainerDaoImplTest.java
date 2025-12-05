@@ -1,7 +1,7 @@
 package com.gym.crm.dao.impl;
 
-import com.gym.crm.model.Trainer;
-import com.gym.crm.model.TrainingType;
+import com.gym.crm.entity.Trainer;
+import com.gym.crm.entity.TrainingType;
 import com.gym.crm.storage.InMemoryStorage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,7 +38,7 @@ class TrainerDaoImplTest {
         trainer.setUsername("john.doe");
         trainer.setPassword("password".toCharArray());
         trainer.setActive(true);
-        trainer.setSpecialization("Pull up");
+        trainer.setSpecialization(new TrainingType(UUID.randomUUID(),"Pull up"));
         trainerDao.create(trainer);
         assertNotNull(trainer.getId());
         verify(storage).put(trainer.getId(), trainer);
