@@ -18,6 +18,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -33,17 +36,23 @@ public class Training {
     private UUID id;
     @ManyToOne
     @JoinColumn(name = "trainee_id", nullable = false)
+    @NotNull(message = "Trainee is mandatory")
     private Trainee trainee;
     @ManyToOne
     @JoinColumn(name = "trainer_id", nullable = false)
+    @NotNull(message = "Trainer is mandatory")
     private Trainer trainer;
     @Column(nullable = false)
+    @NotBlank(message = "Training name is mandatory")
     private String trainingName;
     @ManyToOne
     @JoinColumn(name = "training_type_id", nullable = false)
+    @NotNull(message = "Training type is mandatory")
     private TrainingType trainingType;
     @Column(nullable = false)
+    @NotNull(message = "Training date is mandatory")
     private LocalDateTime trainingDate;
     @Column(nullable = false)
+    @NotNull(message = "Duration is mandatory")
     private Long durationMinutes;
 }

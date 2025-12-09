@@ -26,4 +26,8 @@ public class TrainingType {
     private UUID id;
     @Column(nullable = false)
     private String trainingTypeName;
+
+    public TrainingType(String trainingTypeName) {
+        this.trainingTypeName = trainingTypeName;
+    }
 }

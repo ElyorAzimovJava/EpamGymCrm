@@ -10,6 +10,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.util.List;
 
+import jakarta.validation.constraints.NotNull;
+
 @Data
 @EqualsAndHashCode(callSuper = true, exclude = "trainees")
 @ToString(callSuper = true, exclude = "trainees")
@@ -20,6 +22,7 @@ import java.util.List;
 public class Trainer extends User {
     @ManyToOne
     @JoinColumn(name = "specialization_id")
+    @NotNull(message = "Specialization is mandatory")
     private TrainingType specialization;
     @ManyToMany
     @JoinTable(
