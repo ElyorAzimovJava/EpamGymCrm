@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -41,6 +42,44 @@ public class UserServiceImpl implements UserService {
         }
         log.debug("Generated username: {}", username);
         return username;
+    }
+
+    @Override
+    public boolean checkPassword(String username, char[] password) {
+        log.debug("Checking password for user: {}", username);
+        User user = findByUsername(username);
+        if (user != null) {
+            boolean matches = Arrays.equals(user.getPassword(), password);
+            log.debug("Password for user {} matches: {}", username, matches);
+            return matches;
+        }
+        log.debug("User {} not found", username);
+        return false;
+    }
+
+    @Override
+    public void changePassword(String username, char[] oldPassword, char[] newPassword) {
+        log.debug("Changing password for user: {}", username);
+        if (checkPassword(username, oldPassword)) {
+            User user = findByUsername(username);
+            if (user != null) {
+                user.setPassword(newPassword);
+                log.debug("Password changed successfully for user: {}", username);
+            }
+        } else {
+            log.warn("Password change failed for user: {}. Old password did not match", username);
+        }
+    }
+
+    private User findByUsername(String username) {
+        log.debug("Finding user by username: {}", username);
+        return Stream.concat(
+                        traineeDao.findAll().stream(),
+                        trainerDao.findAll().stream()
+                )
+                .filter(user -> user.getUsername().equals(username))
+                .findFirst()
+                .orElse(null);
     }
 
     private List<String> getAllUsernames() {
