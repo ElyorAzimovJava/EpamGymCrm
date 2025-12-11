@@ -11,4 +11,9 @@ public interface TraineeService {
     void deleteTrainee(UUID id);
     Trainee findById(UUID id);
     List<Trainee> listAll();
+    Trainee findByUsername(String username);
+    void activate(UUID id);
+    void deactivate(UUID id);
+    void deleteByUsername(String username);
+    void updateTraineeTrainers(String username, List<String> trainerUsernames);
 }

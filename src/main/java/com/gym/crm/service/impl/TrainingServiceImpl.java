@@ -7,8 +7,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -35,4 +38,28 @@ public class TrainingServiceImpl implements TrainingService {
         log.debug("Listing all trainings");
         return trainingDao.findAll();
     }
+
+    @Override
+    public List<Training> getTraineeTrainings(String username, LocalDate fromDate, LocalDate toDate, String trainerName, String trainingType) {
+        log.debug("Getting trainee trainings for username: {}", username);
+        return trainingDao.findAll().stream()
+                .filter(t -> t.getTrainee().getUsername().equals(username))
+                .filter(t -> fromDate == null || t.getTrainingDate().isAfter(fromDate.atStartOfDay()))
+                .filter(t -> toDate == null || t.getTrainingDate().isBefore(toDate.atStartOfDay()))
+                .filter(t -> trainerName == null || t.getTrainer().getUsername().equals(trainerName))
+                .filter(t -> trainingType == null || t.getTrainingType().getTrainingTypeName().equals(trainingType))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Training> getTrainerTrainings(String username, LocalDate fromDate, LocalDate toDate, String traineeName) {
+        log.debug("Getting trainer trainings for username: {}", username);
+        return trainingDao.findAll().stream()
+                .filter(t -> t.getTrainer().getUsername().equals(username))
+                .filter(t -> fromDate == null || t.getTrainingDate().isAfter(fromDate.atStartOfDay()))
+                .filter(t -> toDate == null || t.getTrainingDate().isBefore(toDate.atStartOfDay()))
+                .filter(t -> traineeName == null || t.getTrainee().getUsername().equals(traineeName))
+                .collect(Collectors.toList());
+    }
+
 }
