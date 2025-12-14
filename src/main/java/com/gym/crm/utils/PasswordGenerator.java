@@ -1,8 +1,10 @@
-package com.gym.crm.service;
+package com.gym.crm.utils;
+
+import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
 import java.util.Random;
-
+@Service
 public class PasswordGenerator {
     private static final String CHAR_LOWERCASE = "abcdefghijklmnopqrstuvwxyz";
     private static final String CHAR_UPPERCASE = CHAR_LOWERCASE.toUpperCase();
@@ -11,7 +13,7 @@ public class PasswordGenerator {
     private static final String PASSWORD_ALLOW = CHAR_LOWERCASE + CHAR_UPPERCASE + DIGIT + OTHER_SPECIAL;
     private static final Random RANDOM = new SecureRandom();
 
-    public static char[] generatePassword(int length) {
+    public char[] generatePassword(int length) {
         if (length < 4) {
             throw new IllegalArgumentException("Password length must be at least 4 characters");
         }

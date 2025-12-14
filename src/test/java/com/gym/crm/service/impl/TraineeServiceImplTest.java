@@ -2,7 +2,9 @@ package com.gym.crm.service.impl;
 
 import com.gym.crm.dao.TraineeDao;
 import com.gym.crm.entity.Trainee;
+import com.gym.crm.service.TrainerService;
 import com.gym.crm.service.UserService;
+import com.gym.crm.utils.PasswordGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -28,6 +30,12 @@ class TraineeServiceImplTest {
     @Mock
     private UserService userService;
 
+    @Mock
+    private TrainerService trainerService;
+
+    @Mock
+    private PasswordGenerator passwordGenerator;
+
     @InjectMocks
     private TraineeServiceImpl traineeService;
 
@@ -45,6 +53,7 @@ class TraineeServiceImplTest {
         trainee.setDateOfBirth(LocalDate.of(2005,2,12));
         trainee.setAddress("address");
         when(userService.generateUsername("John", "Doe")).thenReturn("john.doe");
+        when(passwordGenerator.generatePassword(10)).thenReturn("password".toCharArray());
         when(traineeDao.create(any(Trainee.class))).thenReturn(trainee);
         traineeService.createTrainee(trainee);
         assertNotNull(trainee.getUsername());

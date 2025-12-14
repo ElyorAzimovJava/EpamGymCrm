@@ -10,4 +10,8 @@ public interface TrainerService {
     Trainer updateTrainer(Trainer trainer);
     Trainer findById(UUID id);
     List<Trainer> listAll();
+    Trainer findByUsername(String username);
+    void activate(UUID id);
+    void deactivate(UUID id);
+    List<Trainer> getUnassignedTrainers(String traineeUsername);
 }

@@ -71,7 +71,8 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    private User findByUsername(String username) {
+    @Override
+    public User findByUsername(String username) {
         log.debug("Finding user by username: {}", username);
         return Stream.concat(
                         traineeDao.findAll().stream(),
