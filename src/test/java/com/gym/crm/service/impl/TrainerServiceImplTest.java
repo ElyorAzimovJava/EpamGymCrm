@@ -2,8 +2,6 @@ package com.gym.crm.service.impl;
 
 import com.gym.crm.dao.TrainerDao;
 import com.gym.crm.entity.Trainer;
-import com.gym.crm.entity.TrainingType;
-import com.gym.crm.service.TraineeService;
 import com.gym.crm.service.UserService;
 import com.gym.crm.utils.PasswordGenerator;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,9 +28,6 @@ class TrainerServiceImplTest {
     private UserService userService;
 
     @Mock
-    private TraineeService traineeService;
-
-    @Mock
     private PasswordGenerator passwordGenerator;
 
     @InjectMocks
@@ -49,7 +44,6 @@ class TrainerServiceImplTest {
         trainer.setFirstName("John");
         trainer.setLastName("Doe");
         trainer.setActive(true);
-        trainer.setSpecialization(new TrainingType(UUID.randomUUID(),"Push up"));
         when(userService.generateUsername("John", "Doe")).thenReturn("john.doe");
         when(passwordGenerator.generatePassword(10)).thenReturn("password".toCharArray());
         when(trainerDao.create(any(Trainer.class))).thenReturn(trainer);

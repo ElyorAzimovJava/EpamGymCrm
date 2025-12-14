@@ -1,8 +1,8 @@
 package com.gym.crm.service.impl;
 
 import com.gym.crm.dao.TrainerDao;
-import com.gym.crm.entity.Trainer;
 import com.gym.crm.entity.Trainee;
+import com.gym.crm.entity.Trainer;
 import com.gym.crm.service.TraineeService;
 import com.gym.crm.service.TrainerService;
 import com.gym.crm.service.UserService;
@@ -46,8 +46,7 @@ public class TrainerServiceImpl implements TrainerService {
 
     public Trainer updateTrainer(Trainer trainer) {
         log.debug("Updating trainer with details: {}", trainer);
-        trainerDao.update(trainer);
-        return trainer;
+        return trainerDao.update(trainer);
     }
 
     public Trainer findById(UUID id) {
@@ -63,10 +62,7 @@ public class TrainerServiceImpl implements TrainerService {
     @Override
     public Trainer findByUsername(String username) {
         log.debug("Finding trainer with username: {}", username);
-        return trainerDao.findAll().stream()
-                .filter(trainer -> trainer.getUsername().equals(username))
-                .findFirst()
-                .orElse(null);
+        return trainerDao.findByUsername(username);
     }
 
     @Override
@@ -92,14 +88,6 @@ public class TrainerServiceImpl implements TrainerService {
     @Override
     public List<Trainer> getUnassignedTrainers(String traineeUsername) {
         log.debug("Getting unassigned trainers for trainee: {}", traineeUsername);
-        Trainee trainee = traineeService.findByUsername(traineeUsername);
-        if (trainee != null) {
-            List<Trainer> allTrainers = trainerDao.findAll();
-            List<Trainer> traineeTrainers = trainee.getTrainers();
-            return allTrainers.stream()
-                    .filter(trainer -> !traineeTrainers.contains(trainer))
-                    .collect(Collectors.toList());
-        }
-        return Collections.emptyList();
+        return trainerDao.getUnassignedTrainers(traineeUsername);
     }
 }
