@@ -27,19 +27,14 @@ public class TrainingServiceImpl implements TrainingService {
     private final TrainerService trainerService;
 
     @Override
-    public Training createTraining(Training  trainingDto) {
-        log.info("Creating training for trainee {} and trainer {}", trainingDto.getTrainee().getId(), trainingDto.getTrainer().getId());
-        Trainee trainee = traineeService.findById(trainingDto.getTrainee().getId());
-        Trainer trainer = trainerService.findById(trainingDto.getTrainer().getId());
-        TrainingType trainingType = trainer.getSpecialization();
+    public Training createTraining(Training training) {
+        log.debug("Creating training with details: {}", training);
+        Trainee trainee = traineeService.findById(training.getTrainee().getId());
+        Trainer trainer = trainerService.findById(training.getTrainer().getId());
 
-        Training training = new Training();
         training.setTrainee(trainee);
         training.setTrainer(trainer);
-        training.setTrainingName(trainingDto.getTrainingName());
-        training.setTrainingType(trainingType);
-        training.setTrainingDate(trainingDto.getTrainingDate());
-        training.setDurationMinutes(trainingDto.getDurationMinutes());
+        training.setTrainingType(trainer.getSpecialization());
 
         return trainingDao.create(training);
     }
