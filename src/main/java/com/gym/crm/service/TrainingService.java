@@ -1,6 +1,7 @@
 package com.gym.crm.service;
 
 import com.gym.crm.entity.Training;
+import com.gym.crm.model.TrainingDto;
 
 import java.time.LocalDate;
 import java.util.List;

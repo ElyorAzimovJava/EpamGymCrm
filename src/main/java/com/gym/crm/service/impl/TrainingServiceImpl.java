@@ -1,39 +1,56 @@
 package com.gym.crm.service.impl;
 
-import com.gym.crm.dao.Dao;
+import com.gym.crm.dao.TrainingDao;
+import com.gym.crm.entity.Trainee;
+import com.gym.crm.entity.Trainer;
 import com.gym.crm.entity.Training;
+import com.gym.crm.entity.TrainingType;
+import com.gym.crm.model.TrainingDto;
+import com.gym.crm.service.TraineeService;
+import com.gym.crm.service.TrainerService;
 import com.gym.crm.service.TrainingService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class TrainingServiceImpl implements TrainingService {
 
-    private Dao<Training, UUID> trainingDao;
+    private final TrainingDao trainingDao;
+    private final TraineeService traineeService;
+    private final TrainerService trainerService;
 
-    @Autowired
-    public void setTrainingDao(Dao<Training, UUID> trainingDao) { this.trainingDao = trainingDao; }
+    @Override
+    public Training createTraining(Training  trainingDto) {
+        log.info("Creating training for trainee {} and trainer {}", trainingDto.getTrainee().getId(), trainingDto.getTrainer().getId());
+        Trainee trainee = traineeService.findById(trainingDto.getTrainee().getId());
+        Trainer trainer = trainerService.findById(trainingDto.getTrainer().getId());
+        TrainingType trainingType = trainer.getSpecialization();
 
-    public Training createTraining(Training training) {
-        log.debug("Creating training with details: {}", training);
-        Training saved = trainingDao.create(training);
-        log.info("Training created: {}", saved);
-        return saved;
+        Training training = new Training();
+        training.setTrainee(trainee);
+        training.setTrainer(trainer);
+        training.setTrainingName(trainingDto.getTrainingName());
+        training.setTrainingType(trainingType);
+        training.setTrainingDate(trainingDto.getTrainingDate());
+        training.setDurationMinutes(trainingDto.getDurationMinutes());
+
+        return trainingDao.create(training);
     }
 
-
+    @Override
     public Training findById(UUID id) {
         log.debug("Finding training with ID: {}", id);
         return trainingDao.findById(id);
     }
+
+    @Override
     public List<Training> listAll() {
         log.debug("Listing all trainings");
         return trainingDao.findAll();
@@ -42,24 +59,12 @@ public class TrainingServiceImpl implements TrainingService {
     @Override
     public List<Training> getTraineeTrainings(String username, LocalDate fromDate, LocalDate toDate, String trainerName, String trainingType) {
         log.debug("Getting trainee trainings for username: {}", username);
-        return trainingDao.findAll().stream()
-                .filter(t -> t.getTrainee().getUsername().equals(username))
-                .filter(t -> fromDate == null || t.getTrainingDate().isAfter(fromDate.atStartOfDay()))
-                .filter(t -> toDate == null || t.getTrainingDate().isBefore(toDate.atStartOfDay()))
-                .filter(t -> trainerName == null || t.getTrainer().getUsername().equals(trainerName))
-                .filter(t -> trainingType == null || t.getTrainingType().getTrainingTypeName().equals(trainingType))
-                .collect(Collectors.toList());
+        return trainingDao.findTraineeTrainings(username, fromDate, toDate, trainerName, trainingType);
     }
 
     @Override
     public List<Training> getTrainerTrainings(String username, LocalDate fromDate, LocalDate toDate, String traineeName) {
         log.debug("Getting trainer trainings for username: {}", username);
-        return trainingDao.findAll().stream()
-                .filter(t -> t.getTrainer().getUsername().equals(username))
-                .filter(t -> fromDate == null || t.getTrainingDate().isAfter(fromDate.atStartOfDay()))
-                .filter(t -> toDate == null || t.getTrainingDate().isBefore(toDate.atStartOfDay()))
-                .filter(t -> traineeName == null || t.getTrainee().getUsername().equals(traineeName))
-                .collect(Collectors.toList());
+        return trainingDao.findTrainerTrainings(username, fromDate, toDate, traineeName);
     }
-
 }

@@ -45,8 +45,7 @@ public class TraineeServiceImpl implements TraineeService {
 
     public Trainee updateTrainee(Trainee trainee) {
         log.debug("Updating trainee with details: {}", trainee);
-        traineeDao.update(trainee);
-        return trainee;
+        return traineeDao.update(trainee);
     }
 
     public void deleteTrainee(UUID id) {
@@ -67,10 +66,7 @@ public class TraineeServiceImpl implements TraineeService {
     @Override
     public Trainee findByUsername(String username) {
         log.debug("Finding trainee with username: {}", username);
-        return traineeDao.findAll().stream()
-                .filter(trainee -> trainee.getUsername().equals(username))
-                .findFirst()
-                .orElse(null);
+        return traineeDao.findByUsername(username);
     }
 
     @Override
