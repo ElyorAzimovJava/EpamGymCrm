@@ -41,6 +41,9 @@ public class GymCRM {
         trainer.setSpecialization(trainingType);
         Trainer createdTrainer = trainerService.createTrainer(trainer);
 
+        securityService.login(createdTrainee.getUsername(), createdTrainee.getPassword());
+        log.info("Authentication successful");
+
         Training training = new Training();
         training.setTrainee(createdTrainee);
         training.setTrainer(createdTrainer);
@@ -48,12 +51,5 @@ public class GymCRM {
         training.setTrainingDate(LocalDateTime.now());
         training.setDurationMinutes(60L);
         Training createdTraining = trainingService.createTraining(training);
-
-        log.info("Created Trainee: {}", createdTrainee);
-        log.info("Created Trainer: {}", createdTrainer);
-        log.info("Created Training: {}", createdTraining);
-
-        securityService.login(createdTrainee.getUsername(), createdTrainee.getPassword());
-        log.info("Authentication successful");
     }
 }

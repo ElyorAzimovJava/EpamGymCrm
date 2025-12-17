@@ -14,6 +14,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.gym.crm.security.AuthenticationContext;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -38,6 +40,9 @@ class TrainingServiceImplTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+        Trainee user = new Trainee();
+        user.setUsername("testUser");
+        AuthenticationContext.setCurrentUser(user);
     }
 
     @Test
