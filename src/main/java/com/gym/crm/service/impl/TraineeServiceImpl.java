@@ -3,6 +3,7 @@ package com.gym.crm.service.impl;
 import com.gym.crm.dao.TraineeDao;
 import com.gym.crm.entity.Trainee;
 import com.gym.crm.entity.Trainer;
+import com.gym.crm.security.AuthenticationContext;
 import com.gym.crm.service.TraineeService;
 import com.gym.crm.service.TrainerService;
 import com.gym.crm.service.UserService;
@@ -44,33 +45,51 @@ public class TraineeServiceImpl implements TraineeService {
     }
 
     public Trainee updateTrainee(Trainee trainee) {
+        if (AuthenticationContext.getCurrentUser() == null) {
+            throw new IllegalStateException("User not authenticated");
+        }
         log.debug("Updating trainee with details: {}", trainee);
         return traineeDao.update(trainee);
     }
 
     public void deleteTrainee(UUID id) {
+        if (AuthenticationContext.getCurrentUser() == null) {
+            throw new IllegalStateException("User not authenticated");
+        }
         log.debug("Deleting trainee with ID: {}", id);
         traineeDao.delete(id);
     }
 
     public Trainee findById(UUID id) {
+        if (AuthenticationContext.getCurrentUser() == null) {
+            throw new IllegalStateException("User not authenticated");
+        }
         log.debug("Finding trainee with ID: {}", id);
         return traineeDao.findById(id);
     }
 
     public List<Trainee> listAll() {
+        if (AuthenticationContext.getCurrentUser() == null) {
+            throw new IllegalStateException("User not authenticated");
+        }
         log.debug("Listing all trainees");
         return traineeDao.findAll();
     }
 
     @Override
     public Trainee findByUsername(String username) {
+        if (AuthenticationContext.getCurrentUser() == null) {
+            throw new IllegalStateException("User not authenticated");
+        }
         log.debug("Finding trainee with username: {}", username);
         return traineeDao.findByUsername(username);
     }
 
     @Override
     public void activate(UUID id) {
+        if (AuthenticationContext.getCurrentUser() == null) {
+            throw new IllegalStateException("User not authenticated");
+        }
         log.debug("Activating trainee with ID: {}", id);
         Trainee trainee = findById(id);
         if (trainee != null) {
@@ -81,6 +100,9 @@ public class TraineeServiceImpl implements TraineeService {
 
     @Override
     public void deactivate(UUID id) {
+        if (AuthenticationContext.getCurrentUser() == null) {
+            throw new IllegalStateException("User not authenticated");
+        }
         log.debug("Deactivating trainee with ID: {}", id);
         Trainee trainee = findById(id);
         if (trainee != null) {
@@ -91,6 +113,9 @@ public class TraineeServiceImpl implements TraineeService {
 
     @Override
     public void deleteByUsername(String username) {
+        if (AuthenticationContext.getCurrentUser() == null) {
+            throw new IllegalStateException("User not authenticated");
+        }
         log.debug("Deleting trainee with username: {}", username);
         Trainee trainee = findByUsername(username);
         if (trainee != null) {
@@ -100,6 +125,9 @@ public class TraineeServiceImpl implements TraineeService {
 
     @Override
     public void updateTraineeTrainers(String username, List<String> trainerUsernames) {
+        if (AuthenticationContext.getCurrentUser() == null) {
+            throw new IllegalStateException("User not authenticated");
+        }
         log.debug("Updating trainers for trainee: {}", username);
         Trainee trainee = findByUsername(username);
         if (trainee != null) {
