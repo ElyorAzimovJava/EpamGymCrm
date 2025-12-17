@@ -8,6 +8,7 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.CascadeType;
 import java.util.List;
 
 import jakarta.validation.constraints.NotNull;
@@ -20,7 +21,7 @@ import jakarta.validation.constraints.NotNull;
 @Entity
 @Table(name = "trainer")
 public class Trainer extends User {
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "specialization_id")
     @NotNull(message = "Specialization is mandatory")
     private TrainingType specialization;
