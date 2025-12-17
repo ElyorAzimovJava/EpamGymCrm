@@ -3,6 +3,7 @@ package com.gym.crm.service.impl;
 import com.gym.crm.dao.TrainerDao;
 import com.gym.crm.entity.Trainee;
 import com.gym.crm.entity.Trainer;
+import com.gym.crm.security.AuthenticationContext;
 import com.gym.crm.service.TraineeService;
 import com.gym.crm.service.TrainerService;
 import com.gym.crm.service.UserService;
@@ -45,28 +46,43 @@ public class TrainerServiceImpl implements TrainerService {
     }
 
     public Trainer updateTrainer(Trainer trainer) {
+        if (AuthenticationContext.getCurrentUser() == null) {
+            throw new IllegalStateException("User not authenticated");
+        }
         log.debug("Updating trainer with details: {}", trainer);
         return trainerDao.update(trainer);
     }
 
     public Trainer findById(UUID id) {
+        if (AuthenticationContext.getCurrentUser() == null) {
+            throw new IllegalStateException("User not authenticated");
+        }
         log.debug("Finding trainer with ID: {}", id);
         return trainerDao.findById(id);
     }
 
     public List<Trainer> listAll() {
+        if (AuthenticationContext.getCurrentUser() == null) {
+            throw new IllegalStateException("User not authenticated");
+        }
         log.debug("Listing all trainers");
         return trainerDao.findAll();
     }
 
     @Override
     public Trainer findByUsername(String username) {
+        if (AuthenticationContext.getCurrentUser() == null) {
+            throw new IllegalStateException("User not authenticated");
+        }
         log.debug("Finding trainer with username: {}", username);
         return trainerDao.findByUsername(username);
     }
 
     @Override
     public void activate(UUID id) {
+        if (AuthenticationContext.getCurrentUser() == null) {
+            throw new IllegalStateException("User not authenticated");
+        }
         log.debug("Activating trainer with ID: {}", id);
         Trainer trainer = findById(id);
         if (trainer != null) {
@@ -77,6 +93,9 @@ public class TrainerServiceImpl implements TrainerService {
 
     @Override
     public void deactivate(UUID id) {
+        if (AuthenticationContext.getCurrentUser() == null) {
+            throw new IllegalStateException("User not authenticated");
+        }
         log.debug("Deactivating trainer with ID: {}", id);
         Trainer trainer = findById(id);
         if (trainer != null) {
@@ -87,6 +106,9 @@ public class TrainerServiceImpl implements TrainerService {
 
     @Override
     public List<Trainer> getUnassignedTrainers(String traineeUsername) {
+        if (AuthenticationContext.getCurrentUser() == null) {
+            throw new IllegalStateException("User not authenticated");
+        }
         log.debug("Getting unassigned trainers for trainee: {}", traineeUsername);
         return trainerDao.getUnassignedTrainers(traineeUsername);
     }
